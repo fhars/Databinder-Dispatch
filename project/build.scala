@@ -20,7 +20,7 @@ object Dispatch extends Build {
   )
   lazy val dispatch =
     Project("Dispatch", file("."), settings = shared) aggregate(
-      futures, core, http, nio, mime, json, http_json,
+      futures, core, http, nio, mime, html5, json, http_json,
       lift_json, oauth)
   lazy val futures =
     Project("dispatch-futures", file("futures"), settings = shared)
@@ -42,6 +42,12 @@ object Dispatch extends Build {
         "org.apache.james" % "apache-mime4j" % "0.6"
       )
     )) dependsOn(core)
+  lazy val html5 =
+    Project("dispatch-html5", file("html5"), settings = shared ++ Seq(
+      libraryDependencies ++= Seq(
+	"nu.validator.htmlparser" % "htmlparser" % "1.2.1"
+      )
+    )) dependsOn(core, http)
   lazy val json =
     Project("dispatch-json", file("json"), settings = shared)
   lazy val http_json =
